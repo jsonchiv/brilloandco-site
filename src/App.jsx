@@ -107,7 +107,11 @@ const DICT = {
 };
 
 // ---------- Routing helpers (SSR-safe) ----------
-const parseHash = (hash) => (hash || "#/" ).replace(/^#\\//, "") || "";
+function parseHash(hash) {
+  const h = hash || "#/";
+  if (typeof h !== "string") return "";
+  return h.startsWith("#/") ? (h.slice(2) || "") : h;
+}
 const getHashRoute = () => (typeof window === "undefined" ? "" : parseHash(window.location.hash));
 
 const useRoute = () => {
